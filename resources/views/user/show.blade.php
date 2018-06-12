@@ -1,8 +1,9 @@
 @extends('layouts.app')
-@section('title','首页')
+@section('title',$user->name.'个人空间')
 @section('content')
 
 <div class="row">
+
 
     <div class="col-lg-3 col-md-3 hidden-sm hidden-xs user-info">
         <div class="panel panel-default">
@@ -17,7 +18,7 @@
                         <p>{{$user->introduction}} </p>
                         <hr>
                         <h4><strong>注册于</strong></h4>
-                        <p>January 01 1901</p>
+                        <p>{{$user->created_at->diffForHumans()}}</p>
                     </div>
                 </div>
             </div>
