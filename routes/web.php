@@ -33,9 +33,17 @@ Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm
 Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 
 
-
+//用户路由
 Route::resource('users','UsersController',['only'=>['show','edit','update']]);
 
 
-
+//话题路由
 Route::resource('topics', 'TopicsController', ['only' => ['index', 'show', 'create', 'store', 'update', 'edit', 'destroy']]);
+
+
+Route::resource('categories','CategoriesController', ['only' => ['show']]);
+
+
+
+
+
