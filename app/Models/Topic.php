@@ -22,7 +22,7 @@ class Topic extends Model
     		case 'recent':
     			$query->recent();
     			break;
-    		
+
     		default:
     			$query->recentReplied();
     			break;
@@ -41,5 +41,11 @@ class Topic extends Model
     	//最后回复
     	return $query->orderBy('updated_at','desc');
     }
-    
+
+    public function link($params = [])
+    {
+        return route('topics.show',array_merge([$this->id, $this->slug], $params));
+    }
+
+
 }

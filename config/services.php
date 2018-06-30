@@ -35,4 +35,9 @@ return [
         'secret' => env('STRIPE_SECRET'),
     ],
 
+    'baidu_tanslate'=>[
+        'appid'=>env('BAIDU_TRANSLATE_APPID'),
+        'key'  =>env('BAIDU_TANSLATE_KEY'),
+    ]
+
 ];
