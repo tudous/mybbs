@@ -5,6 +5,7 @@ namespace App\Observers;
 use App\Models\Topic;
 use App\Handlers\SlugTranslateHandler;
 use App\Jobs\TranslateSlug;
+use Log;
 
 // creating, created, updating, updated, saving,
 // saved,  deleting, deleted, restoring, restored
@@ -30,8 +31,6 @@ class TopicObserver
 
             //app() 允许我们使用 Laravel 服务容器 ，此处我们用来生成 SlugTranslateHandler 实例
             //$topic->slug = app(SlugTranslateHandler::class)->translate($topic->title);
-
-
         }
 
     }
