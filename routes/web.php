@@ -51,4 +51,4 @@ Route::post('upload_image','TopicsController@uploadImage')->name('topics.upload_
 
 
 
-Route::resource('replies', 'RepliesController', ['only' => ['index', 'show', 'create', 'store', 'update', 'edit', 'destroy']]);
+Route::resource('replies', 'RepliesController', ['only' => ['store','destroy']]);
