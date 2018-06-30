@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Log;
 
 class PagesController extends Controller
 {
@@ -15,5 +16,5 @@ class PagesController extends Controller
     {
         return view();
     }
-    
+
 }
