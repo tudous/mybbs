@@ -9,6 +9,7 @@ use App\Models\Category;
 use Auth;
 use App\Handlers\ImageUploadHandler;
 use App\Policies\TopicPolicy;
+use App\Models\Reply;
 
 class TopicsController extends Controller
 {
@@ -87,9 +88,9 @@ class TopicsController extends Controller
 
 	public function destroy(Topic $topic)
 	{
+
 		$this->authorize('destroy', $topic);
 		$topic->delete();
-
 		return redirect()->route('topics.index')->with('success', '删除成功.');
 	}
 }

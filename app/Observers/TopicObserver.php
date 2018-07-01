@@ -42,4 +42,10 @@ class TopicObserver
          dispatch(new TranslateSlug($topic));
          }
     }
+
+    //话题删除后，清空这个话题所有的回复
+    public function deleted(Topic $topic)
+    {
+        \DB::table('replies')->where('topic_id',$topic->id)->delete();
+    }
 }
