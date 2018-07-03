@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Models\Topic;
 use Auth;
 use Spatie\Permission\Traits\HasRoles;
+use Log;
 
 class User extends Authenticatable
 {
@@ -65,5 +66,24 @@ class User extends Authenticatable
     public function isAuthorOf($model)
     {
         return $this->id==$model->user_id;
+    }
+
+    //密码修改器
+    public function setPasswordAttribute($value)
+    {
+        Log::info($value);
+        if(strlen($value) != 60){
+            $value=bcrypt($value);
+        }
+        $this->attributes['password']=$value;
+    }
+
+    public function setAvatarAttribute($path)
+    {
+        Log::info($path);
+        if(!starts_with($path,'http')){
+            $path=config('app.url')."/uploads/images/avatar/$path";
+        }
+        $this->attributes['avatar']=$path;
     }
 }
