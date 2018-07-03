@@ -63,6 +63,13 @@
                         </a>
 
                         <ul class="dropdown-menu" role="menu">
+                            @can('manage_contents')
+                            <li>
+                               <a href="{{ url(config('administrator.uri')) }}">
+                                管理后台
+                                </a>
+                            </li>
+                            @endcan
                             <li>
                             <a href="{{ route('users.show',Auth::id()) }}">个人中心</a>
                             </li>
