@@ -47,7 +47,10 @@ return array(
             'categories',
             'topics',
             'replies',
-        ]
+        ],
+        '站点管理'=>[
+            'settings.site',
+        ],
 
     ],
 
