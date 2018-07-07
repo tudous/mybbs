@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Models\Link;
 use App\Models\Topic;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -12,6 +13,7 @@ use App\Policies\TopicPolicy;
 use App\Models\Reply;
 use App\Models\User;
 
+
 class TopicsController extends Controller
 {
     public function __construct()
@@ -19,12 +21,13 @@ class TopicsController extends Controller
         $this->middleware('auth', ['except' => ['index', 'show']]);
     }
 
-	public function index(Request $request,Topic $topic,User $user)
+	public function index(Request $request,Topic $topic,User $user,Link $link)
 	{
 
 		$topics =$topic->withOrder($request->order) ->paginate(20);
         $active_users=$user->getActiveUsers();
-		return view('topics.index', compact('topics','active_users'));
+        $links=$link->getAllCache();
+		return view('topics.index', compact('topics','active_users','links'));
 	}
 
     public function show(Request $request,Topic $topic)
