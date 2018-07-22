@@ -12,7 +12,17 @@ class VerificationCodesController extends Controller
 {
      public function store(VerificationCodeRequest $request)
     {
-        $phone = $request->phone;
+        $CaptchaData=\Cache::get($request->captcha_key);
+        if(!$CaptchaData){
+            return $this->response->error('图片验证码已失效',422);
+        }
+
+        if (!hash_equals($captchaData['code'], $request->captcha_code)) {
+            // 验证错误就清除缓存
+            \Cache::forget($request->captcha_key);
+            return $this->response->errorUnauthorized('验证码错误');
+        }
+
         $SendTemplateSMS=new SendTemplateSMS;
 
         $code='';
@@ -21,7 +31,7 @@ class VerificationCodesController extends Controller
            $code.=$_str[mt_rand(0,9)];
         }
 
-        $sendResult=$SendTemplateSMS->sendTemplateSMS($phone, array($code, 30), 1);
+        $sendResult=$SendTemplateSMS->sendTemplateSMS($CaptchaData['phone'], array($code, 30), 1);
         if($sendResult['status'] != 0){
             return $sendResult;
         }
