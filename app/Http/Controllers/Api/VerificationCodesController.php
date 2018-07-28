@@ -7,7 +7,6 @@ use App\Handlers\SMS\SendTemplateSMS;
 use App\Http\Requests\Api\VerificationCodeRequest;
 
 
-
 class VerificationCodesController extends Controller
 {
      public function store(VerificationCodeRequest $request)
@@ -17,7 +16,7 @@ class VerificationCodesController extends Controller
             return $this->response->error('图片验证码已失效',422);
         }
 
-        if (!hash_equals($captchaData['code'], $request->captcha_code)) {
+        if (!hash_equals($CaptchaData['code'], $request->captcha_code)) {
             // 验证错误就清除缓存
             \Cache::forget($request->captcha_key);
             return $this->response->errorUnauthorized('验证码错误');
@@ -39,7 +38,7 @@ class VerificationCodesController extends Controller
         $key = 'verificationCode_'.str_random(15);
         $expiredAt = now()->addMinutes(30);
         // 缓存验证码 10分钟过期。
-        \Cache::put($key, ['phone' => $phone, 'code' => $code], $expiredAt);
+        \Cache::put($key, ['phone' => $CaptchaData['phone'], 'code' => $code], $expiredAt);
 
         return $this->response->array([
             'key' => $key,

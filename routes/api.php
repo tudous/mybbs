@@ -21,7 +21,8 @@ use Illuminate\Http\Request;
 $api = app('Dingo\Api\Routing\Router');
 
 $api->version('v1', [
-    'namespace' => 'App\Http\Controllers\Api'
+    'namespace' => 'App\Http\Controllers\Api',
+    'middleware'=> 'serializer:array'
 ], function($api) {
 
     $api->group([
@@ -52,4 +53,20 @@ $api->version('v1', [
     //删除token
     $api->delete('authorizations/current', 'AuthorizationsController@delete')
     ->name('api.authorizations.delete');
+
+     // 需要 token 验证的接口
+     //put 替换某个资源，需提供完整的资源信息
+     //patch 部分修改资源，提供部分资源信息
+     //api.auth 这个中间件，用来区分哪些接口需要验证 token，哪些不需要
+     $api->group(['middleware' => 'api.auth'], function($api) {
+            // 当前登录用户信息
+            $api->get('user', 'UsersController@me')
+                ->name('api.user.show');
+            //图片资源
+             $api->post('images', 'ImagesController@store')
+                ->name('api.images.store');
+            //编辑登陆用户信息
+             $api->patch('user', 'UsersController@update')
+                ->name('api.user.update');
+        });
 });

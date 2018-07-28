@@ -13,7 +13,7 @@ class CaptchasController extends Controller
         $phone=$request->phone;
 
         $captcha=$CaptchaBuilder->build();
-        $expireAt=now()->addMinutes(2);
+        $expireAt=now()->addMinutes(20);
         \Cache::put($key,['phone'=>$phone,'code'=>$captcha->getPhrase()],$expireAt);
 
         $result=[
