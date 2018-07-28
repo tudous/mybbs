@@ -69,4 +69,8 @@ $api->version('v1', [
              $api->patch('user', 'UsersController@update')
                 ->name('api.user.update');
         });
+
+     // 游客可以访问的接口
+    $api->get('categories', 'CategoriesController@index')
+    ->name('api.categories.index');
 });
