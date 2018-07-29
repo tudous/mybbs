@@ -77,6 +77,12 @@ $api->version('v1', [
             //登陆删除话题
             $api->delete('topics/{topic}','TopicsController@destroy')
                 ->name('api.topics.destroy');
+            //给一个话题添加一个回复
+            $api->post('topics/{topic}/replies','RepliesController@store')
+                ->name('api.topics.replies.store');
+            //删除一个回复
+            $api->delete('topics/{topic}/replies/{reply}','RepliesController@destroy')
+                ->name('api.topics.replies.destroy');
         });
 
      // 游客可以访问的接口
