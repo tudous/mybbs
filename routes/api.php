@@ -22,7 +22,7 @@ $api = app('Dingo\Api\Routing\Router');
 
 $api->version('v1', [
     'namespace' => 'App\Http\Controllers\Api',
-    'middleware'=> 'serializer:array'
+    'middleware'=> ['serializer:array','bindings']
 ], function($api) {
 
     $api->group([
@@ -68,6 +68,12 @@ $api->version('v1', [
             //编辑登陆用户信息
              $api->patch('user', 'UsersController@update')
                 ->name('api.user.update');
+            //登陆用户发布话题
+            $api->post('topics','TopicsController@store')
+                ->name('api.topics.store');
+            //登陆用户修改话题
+            $api->patch('topics/{topic}','TopicsController@update')
+                ->name('api.topics.update');
         });
 
      // 游客可以访问的接口
