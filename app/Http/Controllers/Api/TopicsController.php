@@ -6,6 +6,8 @@ use App\Models\Topic;
 use App\Transformers\TopicTransformer;
 use App\Http\Requests\Api\TopicRequest;
 use App\Policies\TopicPolicy;
+use Illuminate\Http\Request;
+use App\Models\User;
 
 class TopicsController extends Controller
 {
@@ -27,5 +29,28 @@ class TopicsController extends Controller
         $topic->update($request->all());
         return $this->response->item($topic, new TopicTransformer())
             ->setStatusCode(201);
+    }
+
+    public function destroy(Topic $topic)
+    {
+        $this->authorize('destroy',$topic);
+        $topic->delete();
+        return $this->response->noContent();
+    }
+
+    public function index(Request $request,Topic $topic)
+    {
+
+        $topic=$topic->WithOrder($request->order)->paginate(20);
+        return $this->response->paginator($topic, new TopicTransformer());
+
+    }
+
+
+    public function userIndex(User $user,Topic $topic)
+    {
+        $topics = $user->topics()->recent()->paginate(20);
+
+        return $this->response->paginator($topics, new TopicTransformer());
     }
 }

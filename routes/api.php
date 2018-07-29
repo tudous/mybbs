@@ -74,9 +74,20 @@ $api->version('v1', [
             //登陆用户修改话题
             $api->patch('topics/{topic}','TopicsController@update')
                 ->name('api.topics.update');
+            //登陆删除话题
+            $api->delete('topics/{topic}','TopicsController@destroy')
+                ->name('api.topics.destroy');
         });
 
      // 游客可以访问的接口
     $api->get('categories', 'CategoriesController@index')
     ->name('api.categories.index');
+    // 游客查询话题
+     $api->get('topics','TopicsController@index')
+         ->name('api.topics.index');
+    //游客查询某个用户发布过的话题
+     $api->get('users/{user}/topics','TopicsController@userIndex')
+         ->name('api.users.topics.index');
+
+
 });
